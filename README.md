@@ -1,0 +1,2 @@
+# wheather-news-api
+ウェザーニュースのAPI
