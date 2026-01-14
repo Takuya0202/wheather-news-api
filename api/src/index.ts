@@ -1,16 +1,23 @@
-import { Hono } from 'hono'
+import { OpenAPIHono } from '@hono/zod-openapi'
+import { searchHandler } from './handler'
+import { searchRoute } from './route'
 
 // envの型定義
-type Bindings = {
+export type Bindings = {
   WHATHER_NEWS_API_KEY: string
-  MAPBOX_API_KET : string
+  MAPBOX_API_KEY : string
 }
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new OpenAPIHono<{ Bindings: Bindings }>()
 
-
-app.get('/api/wheather', (c) => {
-
+app.doc('/docs' , {
+  openapi : '3.0.0',
+  info : {
+    title : 'Weather News API',
+    description : 'Weather News API',
+    version : '1.0.0'
+  }
 })
 
+app.openapi(searchRoute , searchHandler)
 export default app

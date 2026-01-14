@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi" 
 
-export const ParamSchema = z.object({
+export const WheatherParamSchema = z.object({
     lat : z.number()
         .min(-90)
         .max(90)
@@ -26,5 +26,29 @@ export const ParamSchema = z.object({
             required : true
           },
           description : 'ターゲットの緯度。必須のパラメーター'
-        })
+        }),
+    fields : z.array(z.string()).openapi({
+      param : {
+        name : 'fields',
+        in : 'query',
+        description : '取得するフィールド',
+        example : 'title,description',
+        required : false
+      },
+      description : '取得するフィールド。複数指定可能'
+    })
   })
+
+export const SearchParamSchema = z.object({
+  place : z.string()
+   .openapi({
+      param : {
+        name : 'place',
+        in : 'query',
+        description : '検索する場所',
+        example : '名古屋市',
+        required : true
+      },
+      description : '検索する場所。必須項目'
+   })
+})
