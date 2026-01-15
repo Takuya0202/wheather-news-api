@@ -13,7 +13,11 @@ export const SearchResponseSchema = z.object({
       description : '候補地の経度',
       example : 139.123456
     })
-  }))
+  })),
+  is_empty : z.boolean().openapi({
+    description : '検索結果がヒットしたかどうか。ヒットしなかった場合はtrue',
+    example : false
+  })
 })
 
 export const ErrorResponseSchema = z.object({

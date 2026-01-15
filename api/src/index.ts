@@ -1,6 +1,7 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { searchHandler } from './handler'
 import { searchRoute } from './route'
+import { swaggerUI } from '@hono/swagger-ui'
 
 // envの型定義
 export type Bindings = {
@@ -8,7 +9,7 @@ export type Bindings = {
   MAPBOX_API_KEY : string
 }
 
-const app = new OpenAPIHono<{ Bindings: Bindings }>()
+const app = new OpenAPIHono<{ Bindings: Bindings }>().basePath('/api')
 
 app.doc('/docs' , {
   openapi : '3.0.0',
@@ -19,5 +20,7 @@ app.doc('/docs' , {
   }
 })
 
+app.get('/ui' , swaggerUI({url : '/api/docs'}))
 app.openapi(searchRoute , searchHandler)
+
 export default app
