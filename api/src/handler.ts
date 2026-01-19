@@ -32,5 +32,4 @@ export const searchHandler : RouteHandler<typeof searchRoute , { Bindings: Bindi
       error_details : "MAPBOXAPIの取得で失敗しました。"
     } , 400)
   }
-  return c.json({ places : [] , is_empty : true } , 200)
 }
