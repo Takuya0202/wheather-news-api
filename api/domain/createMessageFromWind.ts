@@ -18,7 +18,6 @@ export function createMessageFromWind(wdata: WxData, hours: number = 12): string
 
     // 平均風速と最大風速を計算
     const avgWindSpeed = validWindSpeed.reduce((a, b) => a + b, 0) / validWindSpeed.length;
-    const maxWindSpeed = Math.max(...validWindSpeed);
 
     // 風速に基づいてメッセージを生成
     if (avgWindSpeed < 3) {

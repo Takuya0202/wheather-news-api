@@ -40,12 +40,17 @@ export const WeatherResponseSchema = z.object({
     message: z.string().openapi({
       description: "体感温度のメッセージ。",
       example: "むし暑い"
+    }),
+    status: z.number().int().min(1).max(10).openapi({
+      description: "体感温度のステータス。10段階で表現。10が最も暑い、1が最も寒い。",
+      example: 6
     })
   }).openapi({
     description: "topページで表示する体感温度情報。体感温度、メッセージを返す。",
     example: {
       temp: 25.0,
-      message: "むし暑い"
+      message: "むし暑い",
+      status: 6
     }
   }),
   humidity: z.object({
@@ -86,7 +91,68 @@ export const WeatherResponseSchema = z.object({
     }
   }),
   rain: z.object({
-
+    current_r: z.number().openapi({
+      description: "現在の降水量。",
+      example: 0.0
+    }),
+    message: z.string().openapi({
+      description: "現在の降水量のメッセージ。",
+      example: "雨は降っていません。"
+    })
+  }).openapi({
+    description: "topページで表示する降水量情報。現在の降水量とその降水量のメッセージを返す。",
+    example: {
+      current_r: 0.0,
+      message: "雨は降っていません。"
+    }
+  }),
+  laundry: z.object({
+    status: z.number().int().min(1).max(3).openapi({
+      description: "洗濯を干していいかどうか。1: 干すことができる、2: 注意が必要、3: 干すことができない",
+      example: 1
+    }),
+    message: z.string().openapi({
+      description: "洗濯を干していいかどうかのメッセージ。",
+      example: "洗濯物を干すことができます。"
+    }),
+  }).openapi({
+    description: "topページで表示する洗濯情報。洗濯を干していいかどうかのインデックスとそのメッセージを返す。",
+    example: {
+      status: 1,
+      message: "洗濯物を干すことができます。"
+    }
+  }),
+  atomos: z.object({
+    current_a: z.number().openapi({
+      description: "現在の気圧。hPa単位",
+      example: 1013.25
+    }),
+    status: z.number().int().min(1).max(3).openapi({
+      description: "天気痛リスクのステータス。1: 安定（影響少ない）、2: 注意（やや影響あり）、3: 影響大（症状が出やすい）",
+      example: 1
+    }),
+    message: z.string().openapi({
+      description: "天気痛（気象病）の方向けのメッセージ。気圧の状態や変化に基づいた体調管理のアドバイス。",
+      example: "気圧は安定しています。快適にお過ごしいただけそうです。"
+    })
+  }).openapi({
+    description: "天気痛（気象病）向けの気圧情報。気圧の値、リスクステータス、体調管理のメッセージを返す。",
+    example: {
+      current_a: 1013.25,
+      status: 1,
+      message: "気圧は安定しています。快適にお過ごしいただけそうです。"
+    }
+  }),
+  hair: z.object({
+    message: z.string().openapi({
+      description: "ヘアスタイルに関わるメッセージ、湿度や気温、風速などによって判断",
+      example: "本日は風が大変強いため、前髪に注意してください"
+    })
+  }).openapi({
+    description: "ヘアスタイルに関わるメッセージ、湿度や気温、風速などによって判断",
+    example: {
+      message: "本日は風が大変強いため、前髪に注意してください"
+    }
   })
 })
 
